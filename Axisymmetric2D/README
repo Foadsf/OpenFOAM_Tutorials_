@@ -1,6 +1,9 @@
-Axisymmetric 2D Simulation in OpenFOAM
+This is a fork of Axisymmetric 2D Simulation in OpenFOAM from here:https://github.com/openfoamtutorials/OpenFOAM_Tutorials_/tree/master/Axisymmetric2D
+in order to solve the FOAM FATAL ERROR: Unknown TurbulenceModel type RASModel issue as described here: https://stackoverflow.com/questions/48421407/openfoam-foam-fatal-error-unknown-turbulencemodel-type-rasmodel/48428177#48428177
+
 
 All code can be found at: https://github.com/lordvon/OpenFOAM_Tutorials/tree/master/Axisymmetric2D
+Video can be found here: https://www.youtube.com/watch?v=MUGnlYncqck
 
 DESCRIPTION:
 Here we will do a simple 2D axisymmetric simulation of a donut shape in freestream. The 'wedge' boundary condition will be introduced and details on setting up an axisymmetric case will be shown.
@@ -12,12 +15,13 @@ OUTLINE:
 -Run the simulation and view post-processed results.
 
 COMMANDS:
-gmsh mesh/main.geo -3 -o test.msh
-gmshToFoam test.msh -case case
-# Modify boundary file
-pimpleFoam
+- gmsh mesh/main.geo -3 -o test.msh
+- gmshToFoam test.msh -case case
+- Modify case/constant/polyMesh/boundary your edited file should look like this: https://github.com/Foadsf/OpenFOAM_Tutorials_/blob/master/Axisymmetric2D/case/constant/boundary.back
+- Modify Axisymmetric2D/case/constant/RASProperties as this: https://github.com/Foadsf/OpenFOAM_Tutorials_/blob/master/Axisymmetric2D/case/constant/RASProperties.bak
+- edit case/constant/turbulenceProperties like this: https://github.com/Foadsf/OpenFOAM_Tutorials_/blob/master/Axisymmetric2D/case/constant/turbulenceProperties.back
+- in case/system/fvSchemes change the line div((nuEff*dev(T(grad(U))))) Gauss linear; to div((nuEff*dev2(T(grad(U))))) Gauss linear;
+- run pimpleFoam in the case folder
 
 This tutorial was run successfully on:
--Ubuntu 14.04 64-bit
--OpenFOAM 2.3.1
--Gmsh 2.9.3
+-OpenFOAM 5.x
